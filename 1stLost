@@ -1,3 +1,4 @@
+-- i didnt obfuscate cuz it will get patched already
 local s = game:GetService("ReplicatedStorage")
 local w = game:GetService("Workspace")
 local p = game:GetService("Players").LocalPlayer
