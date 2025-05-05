@@ -1,0 +1,57 @@
+local v=game:GetService("StarterGui")
+local p=game.Players.LocalPlayer
+local t=game:GetService("TeleportService")
+local j=101266069969046
+local k=94686685722059
+local q={}
+
+local function n(a,b)
+    pcall(function()
+        v:SetCore("SendNotification",{Title=a,Text=b,Duration=3})
+    end)
+end
+
+local function s(m)
+    q._tpconfirmed=false
+    local c=p.Chatted:Connect(function(i)
+        if i:lower():find("/e dance") then
+            q._tpconfirmed=true
+        end
+    end)
+    
+    n("ftd",m)
+    task.delay(15,function()
+        c:Disconnect()
+    end)
+    
+    return function()
+        return q._tpconfirmed
+    end
+end
+
+local function x()
+    if game.PlaceId==j then
+        n("ftd","loading lobby")
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/L0stVeil/LocalScripts/refs/heads/main/FTDL"))()
+    elseif game.PlaceId==k then
+        n("ftd","loading game")
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/L0stVeil/LocalScripts/refs/heads/main/FTDG"))()
+    else
+        n("err","wrong game")
+        n("ftd","chat /e dance to tp")
+        
+        local f=s("waiting for dance")
+        task.spawn(function()
+            while true do
+                if f() then
+                    n("ftd","teleporting")
+                    t:Teleport(j,p)
+                    break
+                end
+                task.wait(0.5)
+            end
+        end)
+    end
+end
+
+task.spawn(x)
