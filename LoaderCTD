@@ -1,0 +1,15 @@
+local v6p=game:GetService("Players").LocalPlayer
+local g9x=game.PlaceId
+local z2j=loadstring
+local f4n="https://raw.githubusercontent.com/L0stVeil/LocalScripts/refs/heads/main/"
+local m3b=math.random(5,15)/10
+
+if g9x==18839447737 then
+    task.wait(m3b)
+    z2j(game:HttpGet(f4n.."CTDG"))()
+elseif g9x==18609903786 then
+    task.wait(m3b)
+    z2j(game:HttpGet(f4n.."CTDL"))()
+else
+    v6p:Kick("wrong game detected")
+end
