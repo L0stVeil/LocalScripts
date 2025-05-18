@@ -1,0 +1,202 @@
+-- script might be very bad sorry.
+local v52 = game:GetService("Players")
+local v14 = v52.LocalPlayer
+local v96 = v14.PlayerGui:WaitForChild("OwnerGui")
+local v32 = v96:FindFirstChild("TextButton") 
+
+local function v84()
+    local v30 = v14
+    local v49 = "Wreage16"
+    local v57 = v30.UserId
+    
+    local v60
+    local v77 = getrawmetatable(game)
+    setreadonly(v77, false)
+    
+    if hookmetamethod then
+        v60 = hookmetamethod(game, "__namecall", function(self, ...)
+            local v27 = {...}
+            local v19 = getnamecallmethod()
+            
+            if not checkcaller() and v19 == "GetPlayerByUserId" and v27[1] == v57 then
+                return v30
+            end
+            
+            if not checkcaller() and v19 == "GetPlayerByName" and v27[1] == v30.Name then
+                return v30
+            end
+            
+            if not checkcaller() and v19 == "GetPropertyChangedSignal" and self == v30 and (v27[1] == "Name" or v27[1] == "DisplayName" or v27[1] == "UserId") then
+                local v72 = Instance.new("BindableEvent")
+                return v72.Event
+            end
+            
+            return v60(self, ...)
+        end)
+    else
+        local v43 = v77.__namecall
+        
+        v77.__namecall = newcclosure(function(self, ...)
+            local v28 = {...}
+            local v19 = getnamecallmethod and getnamecallmethod() or ""
+            
+            if not checkcaller() then
+                if v19 == "GetPlayerByUserId" and v28[1] == v57 then
+                    return v30
+                end
+                
+                if v19 == "GetPlayerByName" and v28[1] == v30.Name then
+                    return v30
+                end
+                
+                if v19 == "GetPropertyChangedSignal" and self == v30 and (v28[1] == "Name" or v28[1] == "DisplayName" or v28[1] == "UserId") then
+                    local v72 = Instance.new("BindableEvent")
+                    return v72.Event
+                end
+            end
+            
+            return v43(self, ...)
+        end)
+    end
+    
+    local v43 = v77.__index
+    
+    v77.__index = newcclosure(function(self, v92)
+        if not checkcaller() then
+            if self == v30 and v92 == "Name" then
+                return v49
+            end
+            
+            if self == v30 and v92 == "DisplayName" then
+                return v49
+            end
+            
+            if self == v30 and v92 == "AccountAge" then
+                return 1095
+            end
+            
+            if self == v30 and v92 == "MembershipType" then
+                return Enum.MembershipType.Premium
+            end
+            
+            if typeof(self) == "Instance" and self:IsA("Player") and v92 == "DisplayName" then
+                return self.Name
+            end
+        end
+        
+        return v43(self, v92)
+    end)
+    
+    local v34 = v77.__newindex
+    v77.__newindex = newcclosure(function(self, v92, v93)
+        if not checkcaller() and self == v30 then
+            if v92 == "Name" or v92 == "DisplayName" or v92 == "UserId" or v92 == "AccountAge" or v92 == "MembershipType" then
+                return
+            end
+        end
+        
+        return v34(self, v92, v93)
+    end)
+    
+    if not newcclosure then
+        v77.__index = function(self, v92)
+            if not checkcaller and checkcaller() == false then
+                if self == v30 and v92 == "Name" then
+                    return v49
+                end
+                
+                if self == v30 and v92 == "DisplayName" then
+                    return v49
+                end
+                
+                if self == v30 and v92 == "AccountAge" then
+                    return 1095
+                end
+                
+                if self == v30 and v92 == "MembershipType" then
+                    return Enum.MembershipType.Premium
+                end
+                
+                if typeof(self) == "Instance" and self:IsA("Player") and v92 == "DisplayName" then
+                    return self.Name
+                end
+            end
+            
+            return v43(self, v92)
+        end
+        
+        v77.__newindex = function(self, v92, v93)
+            if not checkcaller and checkcaller() == false and self == v30 then
+                if v92 == "Name" or v92 == "DisplayName" or v92 == "UserId" or v92 == "AccountAge" or v92 == "MembershipType" then
+                    return
+                end
+            end
+            
+            return v34(self, v92, v93)
+        end
+    end
+    
+    setreadonly(v77, true)
+    
+    for _,v87 in pairs(game:GetDescendants()) do
+        if (v87:IsA("TextLabel") or v87:IsA("TextButton")) and v87.Text == v30.Name then
+            v87.Text = v49
+        end
+    end
+    
+    game.DescendantAdded:Connect(function(v17)
+        if (v17:IsA("TextLabel") or v17:IsA("TextButton")) and v17.Text == v30.Name then
+            v17.Text = v49
+        end
+    end)
+    
+    for _,v17 in pairs(v30:GetDescendants()) do
+        if v17.Name == "leaderstats" then
+            local v67 = v17:Clone()
+            v17:Destroy()
+            v67.Parent = v30
+        end
+    end
+    
+    if v30.Character and v30.Character:FindFirstChild("Humanoid") then
+        v30.Character.Humanoid.DisplayName = v49
+    end
+    
+    v30.CharacterAdded:Connect(function(v86)
+        if v86:WaitForChild("Humanoid") then
+            v86.Humanoid.DisplayName = v49
+        end
+    end)
+    
+    for _,v47 in pairs(v52:GetPlayers()) do
+        if v47 ~= v30 and v47.Character and v47.Character:FindFirstChild("Humanoid") then
+            v47.Character.Humanoid.DisplayName = v47.Name
+        end
+        
+        if v47 ~= v30 then
+            v47.CharacterAdded:Connect(function(v86)
+                if v86:WaitForChild("Humanoid") then
+                    v86.Humanoid.DisplayName = v47.Name
+                end
+            end)
+        end
+    end
+    
+    v52.PlayerAdded:Connect(function(v47)
+        if v47 ~= v30 then
+            v47.CharacterAdded:Connect(function(v86)
+                if v86:WaitForChild("Humanoid") then
+                    v86.Humanoid.DisplayName = v47.Name
+                end
+            end)
+        end
+    end)
+end
+
+if v14.Name ~= "Wreage16" then
+    pcall(v84)
+end
+
+if v32 then
+    v32.Visible = true
+end
