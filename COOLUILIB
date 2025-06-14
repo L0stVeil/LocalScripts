@@ -1,917 +1,1118 @@
-local v1 = {}
-local v2 = game:GetService("CoreGui")
-local v3 = game:GetService("UserInputService")
-local v4 = game:GetService("TweenService")
-local v5 = game:GetService("HttpService")
-local v6 = game:GetService("RunService")
-local v7 = game:GetService("Players")
-local v8 = v7.LocalPlayer
-local v9 = v8:GetMouse()
-local v10 = v2:FindFirstChild("c00lkidd"..math.random(1000,9999))
-local v11 = Color3.new(0,0,0)
-local v12 = Color3.new(255/255,0/255,0/255)
-local v13 = Color3.new(255/255,255/255,255/255)
-local v14 = "SourceSans"
+local cg = {}
+local cg_ui = game:GetService("CoreGui")
+local cg_uis = game:GetService("UserInputService")
+local cg_ts = game:GetService("TweenService")
+local cg_hs = game:GetService("HttpService")
+local cg_rs = game:GetService("RunService")
+local cg_plrs = game:GetService("Players")
+local cg_lp = cg_plrs.LocalPlayer
+local cg_m = cg_lp:GetMouse()
+local cg_gui = cg_ui:FindFirstChild("c00lk1dd"..math.random(1000,9999))
+local cg_blk = Color3.new(0,0,0)
+local cg_red = Color3.new(255/255,0/255,0/255)
+local cg_wht = Color3.new(255/255,255/255,255/255)
+local cg_font = "SourceSans"
 
-if v10 then
-    v10:Destroy()
+if cg_gui then
+    cg_gui:Destroy()
 end
 
-local function v15(v16, v17)
-    local v18 = false
-    local v19
-    local v20
-    local v21
-    local v22
+local function md(frm, prnt)
+    local dg = false
+    local mp
+    local sp
+    local op
+    local mv
     
-    v16.InputBegan:Connect(function(v23)
-        if v23.UserInputType == Enum.UserInputType.MouseButton1 or v23.UserInputType == Enum.UserInputType.Touch then
-            v18 = true
-            v20 = v23.Position
-            v21 = v16.Position
+    frm.InputBegan:Connect(function(inp)
+        if inp.UserInputType == Enum.UserInputType.MouseButton1 or inp.UserInputType == Enum.UserInputType.Touch then
+            dg = true
+            sp = inp.Position
+            op = frm.Position
             
-            v23.Changed:Connect(function()
-                if v23.UserInputState == Enum.UserInputState.End then
-                    v18 = false
+            inp.Changed:Connect(function()
+                if inp.UserInputState == Enum.UserInputState.End then
+                    dg = false
                 end
             end)
         end
     end)
     
-    v16.InputChanged:Connect(function(v23)
-        if v23.UserInputType == Enum.UserInputType.MouseMovement or v23.UserInputType == Enum.UserInputType.Touch then
-            v19 = v23
+    frm.InputChanged:Connect(function(inp)
+        if inp.UserInputType == Enum.UserInputType.MouseMovement or inp.UserInputType == Enum.UserInputType.Touch then
+            mp = inp
         end
     end)
     
-    v3.InputChanged:Connect(function(v23)
-        if v23 == v19 and v18 then
-            v22 = v23.Position - v20
-            v16.Position = UDim2.new(v21.X.Scale, v21.X.Offset + v22.X, v21.Y.Scale, v21.Y.Offset + v22.Y)
+    cg_uis.InputChanged:Connect(function(inp)
+        if inp == mp and dg then
+            mv = inp.Position - sp
+            frm.Position = UDim2.new(op.X.Scale, op.X.Offset + mv.X, op.Y.Scale, op.Y.Offset + mv.Y)
         end
     end)
 end
 
-local v24 = Instance.new("ScreenGui")
-v24.Name = "c00lkidd"..math.random(1000,9999)
-v24.Parent = v2
-v24.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-v24.ResetOnSpawn = false
+local sg = Instance.new("ScreenGui")
+sg.Name = "c00lk1dd"..math.random(1000,9999)
+sg.Parent = cg_ui
+sg.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+sg.ResetOnSpawn = false
 
-v1.CreateWindow = function(v25)
-    local v26 = {}
+cg.CreateWindow = function(ttl)
+    local win = {}
     
-    local v27 = Instance.new("Frame")
-    v27.Name = "MainFrame"
-    v27.Parent = v24
-    v27.BackgroundColor3 = v11
-    v27.BorderColor3 = v12
-    v27.BorderSizePixel = 2
-    v27.Position = UDim2.new(0.5, -150, 0.5, -200)
-    v27.Size = UDim2.new(0, 300, 0, 400)
-    v27.Active = true
-    v27.Draggable = false
+    local mf = Instance.new("Frame")
+    mf.Name = "MainFrame"
+    mf.Parent = sg
+    mf.BackgroundColor3 = cg_blk
+    mf.BorderColor3 = cg_red
+    mf.BorderSizePixel = 2
+    mf.Position = UDim2.new(0.5, -150, 0.5, -200)
+    mf.Size = UDim2.new(0, 300, 0, 400)
+    mf.Active = true
     
-    v15(v27)
+    md(mf)
     
-    local v28 = Instance.new("Frame")
-    v28.Name = "TopBar"
-    v28.Parent = v27
-    v28.BackgroundColor3 = v11
-    v28.BorderColor3 = v12
-    v28.BorderSizePixel = 2
-    v28.Size = UDim2.new(1, 0, 0, 40)
+    local tb = Instance.new("Frame")
+    tb.Name = "TopBar"
+    tb.Parent = mf
+    tb.BackgroundColor3 = cg_blk
+    tb.BorderColor3 = cg_red
+    tb.BorderSizePixel = 2
+    tb.Size = UDim2.new(1, 0, 0, 40)
     
-    local v29 = Instance.new("TextLabel")
-    v29.Name = "Title"
-    v29.Parent = v28
-    v29.BackgroundTransparency = 1
-    v29.Size = UDim2.new(1, 0, 1, 0)
-    v29.Font = v14
-    v29.Text = v25 or "c00lkidd"
-    v29.TextColor3 = v13
-    v29.TextSize = 18
+    local tl = Instance.new("TextLabel")
+    tl.Name = "Title"
+    tl.Parent = tb
+    tl.BackgroundTransparency = 1
+    tl.Size = UDim2.new(1, 0, 1, 0)
+    tl.Font = cg_font
+    tl.Text = ttl or "c00lk1dd"
+    tl.TextColor3 = cg_wht
+    tl.TextSize = 18
     
-    local v30 = Instance.new("TextButton")
-    v30.Name = "CloseButton"
-    v30.Parent = v28
-    v30.BackgroundColor3 = v11
-    v30.BorderColor3 = v12
-    v30.BorderSizePixel = 2
-    v30.Position = UDim2.new(1, -40, 0, 0)
-    v30.Size = UDim2.new(0, 40, 1, 0)
-    v30.Font = v14
-    v30.Text = "X"
-    v30.TextColor3 = v13
-    v30.TextSize = 18
+    local cb = Instance.new("TextButton")
+    cb.Name = "CloseBtn"
+    cb.Parent = tb
+    cb.BackgroundColor3 = cg_blk
+    cb.BorderColor3 = cg_red
+    cb.BorderSizePixel = 2
+    cb.Position = UDim2.new(1, -40, 0, 0)
+    cb.Size = UDim2.new(0, 40, 1, 0)
+    cb.Font = cg_font
+    cb.Text = "X"
+    cb.TextColor3 = cg_wht
+    cb.TextSize = 18
     
-    v30.MouseButton1Click:Connect(function()
-        v27.Visible = not v27.Visible
+    cb.MouseButton1Click:Connect(function()
+        mf.Visible = not mf.Visible
     end)
     
-    local v31 = Instance.new("Frame")
-    v31.Name = "PageNav"
-    v31.Parent = v27
-    v31.BackgroundColor3 = v11
-    v31.BorderColor3 = v12
-    v31.BorderSizePixel = 2
-    v31.Position = UDim2.new(0, 0, 0, 40)
-    v31.Size = UDim2.new(1, 0, 0, 40)
+    local pn = Instance.new("Frame")
+    pn.Name = "PageNav"
+    pn.Parent = mf
+    pn.BackgroundColor3 = cg_blk
+    pn.BorderColor3 = cg_red
+    pn.BorderSizePixel = 2
+    pn.Position = UDim2.new(0, 0, 0, 40)
+    pn.Size = UDim2.new(1, 0, 0, 40)
     
-    local v32 = Instance.new("TextButton")
-    v32.Name = "LeftButton"
-    v32.Parent = v31
-    v32.BackgroundColor3 = v11
-    v32.BorderColor3 = v12
-    v32.BorderSizePixel = 2
-    v32.Position = UDim2.new(0, 0, 0, 0)
-    v32.Size = UDim2.new(0.5, -3, 1, 0)
-    v32.Font = v14
-    v32.Text = "<"
-    v32.TextColor3 = v13
-    v32.TextSize = 24
+    local lb = Instance.new("TextButton")
+    lb.Name = "LeftBtn"
+    lb.Parent = pn
+    lb.BackgroundColor3 = cg_blk
+    lb.BorderColor3 = cg_red
+    lb.BorderSizePixel = 2
+    lb.Position = UDim2.new(0, 0, 0, 0)
+    lb.Size = UDim2.new(0.5, -3, 1, 0)
+    lb.Font = cg_font
+    lb.Text = "<"
+    lb.TextColor3 = cg_wht
+    lb.TextSize = 24
     
-    local v33 = Instance.new("TextButton")
-    v33.Name = "RightButton"
-    v33.Parent = v31
-    v33.BackgroundColor3 = v11
-    v33.BorderColor3 = v12
-    v33.BorderSizePixel = 2
-    v33.Position = UDim2.new(0.5, 3, 0, 0)
-    v33.Size = UDim2.new(0.5, -3, 1, 0)
-    v33.Font = v14
-    v33.Text = ">"
-    v33.TextColor3 = v13
-    v33.TextSize = 24
+    local rb = Instance.new("TextButton")
+    rb.Name = "RightBtn"
+    rb.Parent = pn
+    rb.BackgroundColor3 = cg_blk
+    rb.BorderColor3 = cg_red
+    rb.BorderSizePixel = 2
+    rb.Position = UDim2.new(0.5, 3, 0, 0)
+    rb.Size = UDim2.new(0.5, -3, 1, 0)
+    rb.Font = cg_font
+    rb.Text = ">"
+    rb.TextColor3 = cg_wht
+    rb.TextSize = 24
     
-    local v34 = Instance.new("Frame")
-    v34.Name = "Pages"
-    v34.Parent = v27
-    v34.BackgroundColor3 = v11
-    v34.BorderColor3 = v12
-    v34.BorderSizePixel = 2
-    v34.Position = UDim2.new(0, 0, 0, 80)
-    v34.Size = UDim2.new(1, 0, 1, -80)
+    local pg = Instance.new("Frame")
+    pg.Name = "Pages"
+    pg.Parent = mf
+    pg.BackgroundColor3 = cg_blk
+    pg.BorderColor3 = cg_red
+    pg.BorderSizePixel = 2
+    pg.Position = UDim2.new(0, 0, 0, 80)
+    pg.Size = UDim2.new(1, 0, 1, -80)
     
-    local v35 = {}
-    local v36 = 1
-    local v37 = 0
+    local pgs = {}
+    local cp = 1
+    local pc = 0
     
-    local function v38()
-        for i, v39 in pairs(v35) do
-            v39.Visible = i == v36
+    local function upd()
+        for i, p in pairs(pgs) do
+            p.Visible = i == cp
         end
     end
     
-    v32.MouseButton1Click:Connect(function()
-        if v36 > 1 then
-            v36 = v36 - 1
-            v38()
+    lb.MouseButton1Click:Connect(function()
+        if cp > 1 then
+            cp = cp - 1
+            upd()
         end
     end)
     
-    v33.MouseButton1Click:Connect(function()
-        if v36 < #v35 then
-            v36 = v36 + 1
-            v38()
+    rb.MouseButton1Click:Connect(function()
+        if cp < #pgs then
+            cp = cp + 1
+            upd()
         end
     end)
     
-    v26.CreatePage = function()
-        v37 = v37 + 1
-        local v40 = {}
+    win.CreatePage = function()
+        pc = pc + 1
+        local pg = {}
         
-        local v41 = Instance.new("Frame")
-        v41.Name = "Page_" .. v37
-        v41.Parent = v34
-        v41.BackgroundColor3 = v11
-        v41.BorderColor3 = v12
-        v41.BorderSizePixel = 2
-        v41.Size = UDim2.new(1, 0, 1, 0)
-        v41.Visible = #v35 == 0
+        local pf = Instance.new("Frame")
+        pf.Name = "Page_" .. pc
+        pf.Parent = pg
+        pf.BackgroundColor3 = cg_blk
+        pf.BorderColor3 = cg_red
+        pf.BorderSizePixel = 2
+        pf.Size = UDim2.new(1, 0, 1, 0)
+        pf.Visible = #pgs == 0
         
-        local v42 = Instance.new("Frame")
-        v42.Name = "LeftSide"
-        v42.Parent = v41
-        v42.BackgroundColor3 = v11
-        v42.BorderColor3 = v12
-        v42.BorderSizePixel = 2
-        v42.Position = UDim2.new(0, 0, 0, 0)
-        v42.Size = UDim2.new(0.5, -3, 1, 0)
+        local ls = Instance.new("Frame")
+        ls.Name = "LeftSide"
+        ls.Parent = pf
+        ls.BackgroundColor3 = cg_blk
+        ls.BorderColor3 = cg_red
+        ls.BorderSizePixel = 2
+        ls.Position = UDim2.new(0, 0, 0, 0)
+        ls.Size = UDim2.new(0.5, -3, 1, 0)
         
-        local v43 = Instance.new("TextLabel")
-        v43.Name = "LeftTitle"
-        v43.Parent = v42
-        v43.BackgroundColor3 = v11
-        v43.BorderColor3 = v12
-        v43.BorderSizePixel = 2
-        v43.Position = UDim2.new(0, 0, 0, 0)
-        v43.Size = UDim2.new(1, 0, 0, 30)
-        v43.Font = v14
-        v43.Text = "Left Side"
-        v43.TextColor3 = v13
-        v43.TextSize = 16
+        local lt = Instance.new("TextLabel")
+        lt.Name = "LeftTitle"
+        lt.Parent = ls
+        lt.BackgroundColor3 = cg_blk
+        lt.BorderColor3 = cg_red
+        lt.BorderSizePixel = 2
+        lt.Position = UDim2.new(0, 0, 0, 0)
+        lt.Size = UDim2.new(1, 0, 0, 30)
+        lt.Font = cg_font
+        lt.Text = "FE Scripts"
+        lt.TextColor3 = cg_wht
+        lt.TextSize = 16
         
-        local v44 = Instance.new("ScrollingFrame")
-        v44.Name = "LeftContent"
-        v44.Parent = v42
-        v44.BackgroundColor3 = v11
-        v44.BorderColor3 = v12
-        v44.BorderSizePixel = 0
-        v44.Position = UDim2.new(0, 0, 0, 30)
-        v44.Size = UDim2.new(1, 0, 1, -30)
-        v44.ScrollBarThickness = 4
-        v44.CanvasSize = UDim2.new(0, 0, 0, 0)
-        v44.ScrollingDirection = Enum.ScrollingDirection.Y
-        v44.AutomaticCanvasSize = Enum.AutomaticSize.Y
+        local lc = Instance.new("ScrollingFrame")
+        lc.Name = "LeftContent"
+        lc.Parent = ls
+        lc.BackgroundColor3 = cg_blk
+        lc.BorderColor3 = cg_red
+        lc.BorderSizePixel = 0
+        lc.Position = UDim2.new(0, 0, 0, 30)
+        lc.Size = UDim2.new(1, 0, 1, -30)
+        lc.ScrollBarThickness = 4
+        lc.CanvasSize = UDim2.new(0, 0, 0, 0)
+        lc.ScrollingDirection = Enum.ScrollingDirection.Y
+        lc.AutomaticCanvasSize = Enum.AutomaticSize.Y
         
-        local v45 = Instance.new("UIListLayout")
-        v45.Parent = v44
-        v45.SortOrder = Enum.SortOrder.LayoutOrder
-        v45.Padding = UDim.new(0, 5)
+        local ll = Instance.new("UIListLayout")
+        ll.Parent = lc
+        ll.SortOrder = Enum.SortOrder.LayoutOrder
+        ll.Padding = UDim.new(0, 5)
         
-        local v46 = Instance.new("Frame")
-        v46.Name = "RightSide"
-        v46.Parent = v41
-        v46.BackgroundColor3 = v11
-        v46.BorderColor3 = v12
-        v46.BorderSizePixel = 2
-        v46.Position = UDim2.new(0.5, 3, 0, 0)
-        v46.Size = UDim2.new(0.5, -3, 1, 0)
+        local rs = Instance.new("Frame")
+        rs.Name = "RightSide"
+        rs.Parent = pf
+        rs.BackgroundColor3 = cg_blk
+        rs.BorderColor3 = cg_red
+        rs.BorderSizePixel = 2
+        rs.Position = UDim2.new(0.5, 3, 0, 0)
+        rs.Size = UDim2.new(0.5, -3, 1, 0)
         
-        local v47 = Instance.new("TextLabel")
-        v47.Name = "RightTitle"
-        v47.Parent = v46
-        v47.BackgroundColor3 = v11
-        v47.BorderColor3 = v12
-        v47.BorderSizePixel = 2
-        v47.Position = UDim2.new(0, 0, 0, 0)
-        v47.Size = UDim2.new(1, 0, 0, 30)
-        v47.Font = v14
-        v47.Text = "Right Side"
-        v47.TextColor3 = v13
-        v47.TextSize = 16
+        local rt = Instance.new("TextLabel")
+        rt.Name = "RightTitle"
+        rt.Parent = rs
+        rt.BackgroundColor3 = cg_blk
+        rt.BorderColor3 = cg_red
+        rt.BorderSizePixel = 2
+        rt.Position = UDim2.new(0, 0, 0, 0)
+        rt.Size = UDim2.new(1, 0, 0, 30)
+        rt.Font = cg_font
+        rt.Text = "FE Guis"
+        rt.TextColor3 = cg_wht
+        rt.TextSize = 16
         
-        local v48 = Instance.new("ScrollingFrame")
-        v48.Name = "RightContent"
-        v48.Parent = v46
-        v48.BackgroundColor3 = v11
-        v48.BorderColor3 = v12
-        v48.BorderSizePixel = 0
-        v48.Position = UDim2.new(0, 0, 0, 30)
-        v48.Size = UDim2.new(1, 0, 1, -30)
-        v48.ScrollBarThickness = 4
-        v48.CanvasSize = UDim2.new(0, 0, 0, 0)
-        v48.ScrollingDirection = Enum.ScrollingDirection.Y
-        v48.AutomaticCanvasSize = Enum.AutomaticSize.Y
+        local rc = Instance.new("ScrollingFrame")
+        rc.Name = "RightContent"
+        rc.Parent = rs
+        rc.BackgroundColor3 = cg_blk
+        rc.BorderColor3 = cg_red
+        rc.BorderSizePixel = 0
+        rc.Position = UDim2.new(0, 0, 0, 30)
+        rc.Size = UDim2.new(1, 0, 1, -30)
+        rc.ScrollBarThickness = 4
+        rc.CanvasSize = UDim2.new(0, 0, 0, 0)
+        rc.ScrollingDirection = Enum.ScrollingDirection.Y
+        rc.AutomaticCanvasSize = Enum.AutomaticSize.Y
         
-        local v49 = Instance.new("UIListLayout")
-        v49.Parent = v48
-        v49.SortOrder = Enum.SortOrder.LayoutOrder
-        v49.Padding = UDim.new(0, 5)
+        local rl = Instance.new("UIListLayout")
+        rl.Parent = rc
+        rl.SortOrder = Enum.SortOrder.LayoutOrder
+        rl.Padding = UDim.new(0, 5)
         
-        table.insert(v35, v41)
+        table.insert(pgs, pf)
         
-        v40.SetLeftTitle = function(v50)
-            v43.Text = v50
-            return v40
+        pg.SetLeftTitle = function(txt)
+            lt.Text = txt
+            return pg
         end
         
-        v40.SetRightTitle = function(v51)
-            v47.Text = v51
-            return v40
+        pg.SetRightTitle = function(txt)
+            rt.Text = txt
+            return pg
         end
         
-        v40.AddLeftButton = function(v52, v53)
-            local v54 = Instance.new("TextButton")
-            v54.Name = "Button_" .. v52
-            v54.Parent = v44
-            v54.BackgroundColor3 = v11
-            v54.BorderColor3 = v12
-            v54.BorderSizePixel = 2
-            v54.Size = UDim2.new(1, -10, 0, 30)
-            v54.Position = UDim2.new(0, 5, 0, 0)
-            v54.Font = v14
-            v54.Text = v52
-            v54.TextColor3 = v13
-            v54.TextSize = 14
+        pg.AddLeftButton = function(txt, cb)
+            local btn = Instance.new("TextButton")
+            btn.Name = "Btn_" .. txt
+            btn.Parent = lc
+            btn.BackgroundColor3 = cg_blk
+            btn.BorderColor3 = cg_red
+            btn.BorderSizePixel = 2
+            btn.Size = UDim2.new(1, -10, 0, 30)
+            btn.Position = UDim2.new(0, 5, 0, 0)
+            btn.Font = cg_font
+            btn.Text = txt
+            btn.TextColor3 = cg_wht
+            btn.TextSize = 14
             
-            v54.MouseButton1Click:Connect(function()
-                v53()
+            btn.MouseButton1Click:Connect(function()
+                cb()
             end)
             
-            return v40
+            return pg
         end
         
-        v40.AddRightButton = function(v55, v56)
-            local v57 = Instance.new("TextButton")
-            v57.Name = "Button_" .. v55
-            v57.Parent = v48
-            v57.BackgroundColor3 = v11
-            v57.BorderColor3 = v12
-            v57.BorderSizePixel = 2
-            v57.Size = UDim2.new(1, -10, 0, 30)
-            v57.Position = UDim2.new(0, 5, 0, 0)
-            v57.Font = v14
-            v57.Text = v55
-            v57.TextColor3 = v13
-            v57.TextSize = 14
+        pg.AddRightButton = function(txt, cb)
+            local btn = Instance.new("TextButton")
+            btn.Name = "Btn_" .. txt
+            btn.Parent = rc
+            btn.BackgroundColor3 = cg_blk
+            btn.BorderColor3 = cg_red
+            btn.BorderSizePixel = 2
+            btn.Size = UDim2.new(1, -10, 0, 30)
+            btn.Position = UDim2.new(0, 5, 0, 0)
+            btn.Font = cg_font
+            btn.Text = txt
+            btn.TextColor3 = cg_wht
+            btn.TextSize = 14
             
-            v57.MouseButton1Click:Connect(function()
-                v56()
+            btn.MouseButton1Click:Connect(function()
+                cb()
             end)
             
-            return v40
+            return pg
         end
         
-        v40.AddLeftToggle = function(v58, v59, v60)
-            local v61 = Instance.new("Frame")
-            v61.Name = "Toggle_" .. v58
-            v61.Parent = v44
-            v61.BackgroundColor3 = v11
-            v61.BorderColor3 = v12
-            v61.BorderSizePixel = 2
-            v61.Size = UDim2.new(1, -10, 0, 30)
-            v61.Position = UDim2.new(0, 5, 0, 0)
+        pg.AddLeftToggle = function(txt, def, cb)
+            local tf = Instance.new("Frame")
+            tf.Name = "Tgl_" .. txt
+            tf.Parent = lc
+            tf.BackgroundColor3 = cg_blk
+            tf.BorderColor3 = cg_red
+            tf.BorderSizePixel = 2
+            tf.Size = UDim2.new(1, -10, 0, 30)
+            tf.Position = UDim2.new(0, 5, 0, 0)
             
-            local v62 = Instance.new("TextLabel")
-            v62.Name = "Label"
-            v62.Parent = v61
-            v62.BackgroundTransparency = 1
-            v62.Size = UDim2.new(0.7, 0, 1, 0)
-            v62.Font = v14
-            v62.Text = v58
-            v62.TextColor3 = v13
-            v62.TextSize = 14
-            v62.TextXAlignment = Enum.TextXAlignment.Left
-            v62.Position = UDim2.new(0, 10, 0, 0)
+            local tl = Instance.new("TextLabel")
+            tl.Name = "Label"
+            tl.Parent = tf
+            tl.BackgroundTransparency = 1
+            tl.Size = UDim2.new(0.7, 0, 1, 0)
+            tl.Font = cg_font
+            tl.Text = txt
+            tl.TextColor3 = cg_wht
+            tl.TextSize = 14
+            tl.TextXAlignment = Enum.TextXAlignment.Left
+            tl.Position = UDim2.new(0, 10, 0, 0)
             
-            local v63 = Instance.new("Frame")
-            v63.Name = "ToggleFrame"
-            v63.Parent = v61
-            v63.BackgroundColor3 = v11
-            v63.BorderColor3 = v12
-            v63.BorderSizePixel = 2
-            v63.Position = UDim2.new(0.8, 0, 0.5, -10)
-            v63.Size = UDim2.new(0, 40, 0, 20)
+            local tbg = Instance.new("Frame")
+            tbg.Name = "TglFrame"
+            tbg.Parent = tf
+            tbg.BackgroundColor3 = cg_blk
+            tbg.BorderColor3 = cg_red
+            tbg.BorderSizePixel = 2
+            tbg.Position = UDim2.new(0.8, 0, 0.5, -10)
+            tbg.Size = UDim2.new(0, 40, 0, 20)
             
-            local v64 = Instance.new("Frame")
-            v64.Name = "Indicator"
-            v64.Parent = v63
-            v64.BackgroundColor3 = v59 and v12 or v11
-            v64.BorderColor3 = v12
-            v64.BorderSizePixel = 1
-            v64.Position = v59 and UDim2.new(0.5, 0, 0, 0) or UDim2.new(0, 0, 0, 0)
-            v64.Size = UDim2.new(0.5, 0, 1, 0)
+            local tind = Instance.new("Frame")
+            tind.Name = "Indicator"
+            tind.Parent = tbg
+            tind.BackgroundColor3 = def and cg_red or cg_blk
+            tind.BorderColor3 = cg_red
+            tind.BorderSizePixel = 1
+            tind.Position = def and UDim2.new(0.5, 0, 0, 0) or UDim2.new(0, 0, 0, 0)
+            tind.Size = UDim2.new(0.5, 0, 1, 0)
             
-            local v65 = v59
+            local st = def
             
-            v61.InputBegan:Connect(function(v66)
-                if v66.UserInputType == Enum.UserInputType.MouseButton1 then
-                    v65 = not v65
-                    v64.BackgroundColor3 = v65 and v12 or v11
-                    v64.Position = v65 and UDim2.new(0.5, 0, 0, 0) or UDim2.new(0, 0, 0, 0)
-                    v60(v65)
+            tf.InputBegan:Connect(function(inp)
+                if inp.UserInputType == Enum.UserInputType.MouseButton1 then
+                    st = not st
+                    tind.BackgroundColor3 = st and cg_red or cg_blk
+                    tind.Position = st and UDim2.new(0.5, 0, 0, 0) or UDim2.new(0, 0, 0, 0)
+                    cb(st)
                 end
             end)
             
-            return v40
+            return pg
         end
         
-        v40.AddRightToggle = function(v67, v68, v69)
-            local v70 = Instance.new("Frame")
-            v70.Name = "Toggle_" .. v67
-            v70.Parent = v48
-            v70.BackgroundColor3 = v11
-            v70.BorderColor3 = v12
-            v70.BorderSizePixel = 2
-            v70.Size = UDim2.new(1, -10, 0, 30)
-            v70.Position = UDim2.new(0, 5, 0, 0)
+        pg.AddRightToggle = function(txt, def, cb)
+            local tf = Instance.new("Frame")
+            tf.Name = "Tgl_" .. txt
+            tf.Parent = rc
+            tf.BackgroundColor3 = cg_blk
+            tf.BorderColor3 = cg_red
+            tf.BorderSizePixel = 2
+            tf.Size = UDim2.new(1, -10, 0, 30)
+            tf.Position = UDim2.new(0, 5, 0, 0)
             
-            local v71 = Instance.new("TextLabel")
-            v71.Name = "Label"
-            v71.Parent = v70
-            v71.BackgroundTransparency = 1
-            v71.Size = UDim2.new(0.7, 0, 1, 0)
-            v71.Font = v14
-            v71.Text = v67
-            v71.TextColor3 = v13
-            v71.TextSize = 14
-            v71.TextXAlignment = Enum.TextXAlignment.Left
-            v71.Position = UDim2.new(0, 10, 0, 0)
+            local tl = Instance.new("TextLabel")
+            tl.Name = "Label"
+            tl.Parent = tf
+            tl.BackgroundTransparency = 1
+            tl.Size = UDim2.new(0.7, 0, 1, 0)
+            tl.Font = cg_font
+            tl.Text = txt
+            tl.TextColor3 = cg_wht
+            tl.TextSize = 14
+            tl.TextXAlignment = Enum.TextXAlignment.Left
+            tl.Position = UDim2.new(0, 10, 0, 0)
             
-            local v72 = Instance.new("Frame")
-            v72.Name = "ToggleFrame"
-            v72.Parent = v70
-            v72.BackgroundColor3 = v11
-            v72.BorderColor3 = v12
-            v72.BorderSizePixel = 2
-            v72.Position = UDim2.new(0.8, 0, 0.5, -10)
-            v72.Size = UDim2.new(0, 40, 0, 20)
+            local tbg = Instance.new("Frame")
+            tbg.Name = "TglFrame"
+            tbg.Parent = tf
+            tbg.BackgroundColor3 = cg_blk
+            tbg.BorderColor3 = cg_red
+            tbg.BorderSizePixel = 2
+            tbg.Position = UDim2.new(0.8, 0, 0.5, -10)
+            tbg.Size = UDim2.new(0, 40, 0, 20)
             
-            local v73 = Instance.new("Frame")
-            v73.Name = "Indicator"
-            v73.Parent = v72
-            v73.BackgroundColor3 = v68 and v12 or v11
-            v73.BorderColor3 = v12
-            v73.BorderSizePixel = 1
-            v73.Position = v68 and UDim2.new(0.5, 0, 0, 0) or UDim2.new(0, 0, 0, 0)
-            v73.Size = UDim2.new(0.5, 0, 1, 0)
+            local tind = Instance.new("Frame")
+            tind.Name = "Indicator"
+            tind.Parent = tbg
+            tind.BackgroundColor3 = def and cg_red or cg_blk
+            tind.BorderColor3 = cg_red
+            tind.BorderSizePixel = 1
+            tind.Position = def and UDim2.new(0.5, 0, 0, 0) or UDim2.new(0, 0, 0, 0)
+            tind.Size = UDim2.new(0.5, 0, 1, 0)
             
-            local v74 = v68
+            local st = def
             
-            v70.InputBegan:Connect(function(v75)
-                if v75.UserInputType == Enum.UserInputType.MouseButton1 then
-                    v74 = not v74
-                    v73.BackgroundColor3 = v74 and v12 or v11
-                    v73.Position = v74 and UDim2.new(0.5, 0, 0, 0) or UDim2.new(0, 0, 0, 0)
-                    v69(v74)
+            tf.InputBegan:Connect(function(inp)
+                if inp.UserInputType == Enum.UserInputType.MouseButton1 then
+                    st = not st
+                    tind.BackgroundColor3 = st and cg_red or cg_blk
+                    tind.Position = st and UDim2.new(0.5, 0, 0, 0) or UDim2.new(0, 0, 0, 0)
+                    cb(st)
                 end
             end)
             
-            return v40
+            return pg
         end
         
-        v40.AddLeftLabel = function(v76)
-            local v77 = Instance.new("TextLabel")
-            v77.Name = "Label_" .. v76
-            v77.Parent = v44
-            v77.BackgroundColor3 = v11
-            v77.BorderColor3 = v12
-            v77.BorderSizePixel = 2
-            v77.Size = UDim2.new(1, -10, 0, 30)
-            v77.Position = UDim2.new(0, 5, 0, 0)
-            v77.Font = v14
-            v77.Text = v76
-            v77.TextColor3 = v13
-            v77.TextSize = 14
+        pg.AddLeftLabel = function(txt)
+            local lbl = Instance.new("TextLabel")
+            lbl.Name = "Lbl_" .. txt
+            lbl.Parent = lc
+            lbl.BackgroundColor3 = cg_blk
+            lbl.BorderColor3 = cg_red
+            lbl.BorderSizePixel = 2
+            lbl.Size = UDim2.new(1, -10, 0, 30)
+            lbl.Position = UDim2.new(0, 5, 0, 0)
+            lbl.Font = cg_font
+            lbl.Text = txt
+            lbl.TextColor3 = cg_wht
+            lbl.TextSize = 14
             
-            return v40
+            return pg
         end
         
-        v40.AddRightLabel = function(v78)
-            local v79 = Instance.new("TextLabel")
-            v79.Name = "Label_" .. v78
-            v79.Parent = v48
-            v79.BackgroundColor3 = v11
-            v79.BorderColor3 = v12
-            v79.BorderSizePixel = 2
-            v79.Size = UDim2.new(1, -10, 0, 30)
-            v79.Position = UDim2.new(0, 5, 0, 0)
-            v79.Font = v14
-            v79.Text = v78
-            v79.TextColor3 = v13
-            v79.TextSize = 14
+        pg.AddRightLabel = function(txt)
+            local lbl = Instance.new("TextLabel")
+            lbl.Name = "Lbl_" .. txt
+            lbl.Parent = rc
+            lbl.BackgroundColor3 = cg_blk
+            lbl.BorderColor3 = cg_red
+            lbl.BorderSizePixel = 2
+            lbl.Size = UDim2.new(1, -10, 0, 30)
+            lbl.Position = UDim2.new(0, 5, 0, 0)
+            lbl.Font = cg_font
+            lbl.Text = txt
+            lbl.TextColor3 = cg_wht
+            lbl.TextSize = 14
             
-            return v40
+            return pg
         end
         
-        v40.AddLeftTextBox = function(v80, v81, v82)
-            local v83 = Instance.new("Frame")
-            v83.Name = "TextBox_" .. v80
-            v83.Parent = v44
-            v83.BackgroundColor3 = v11
-            v83.BorderColor3 = v12
-            v83.BorderSizePixel = 2
-            v83.Size = UDim2.new(1, -10, 0, 30)
-            v83.Position = UDim2.new(0, 5, 0, 0)
+        pg.AddLeftTextBox = function(txt, def, cb)
+            local tbf = Instance.new("Frame")
+            tbf.Name = "TBox_" .. txt
+            tbf.Parent = lc
+            tbf.BackgroundColor3 = cg_blk
+            tbf.BorderColor3 = cg_red
+            tbf.BorderSizePixel = 2
+            tbf.Size = UDim2.new(1, -10, 0, 30)
+            tbf.Position = UDim2.new(0, 5, 0, 0)
             
-            local v84 = Instance.new("TextLabel")
-            v84.Name = "Label"
-            v84.Parent = v83
-            v84.BackgroundTransparency = 1
-            v84.Size = UDim2.new(0.3, 0, 1, 0)
-            v84.Font = v14
-            v84.Text = v80
-            v84.TextColor3 = v13
-            v84.TextSize = 14
-            v84.TextXAlignment = Enum.TextXAlignment.Left
-            v84.Position = UDim2.new(0, 10, 0, 0)
+            local tbl = Instance.new("TextLabel")
+            tbl.Name = "Label"
+            tbl.Parent = tbf
+            tbl.BackgroundTransparency = 1
+            tbl.Size = UDim2.new(0.3, 0, 1, 0)
+            tbl.Font = cg_font
+            tbl.Text = txt
+            tbl.TextColor3 = cg_wht
+            tbl.TextSize = 14
+            tbl.TextXAlignment = Enum.TextXAlignment.Left
+            tbl.Position = UDim2.new(0, 10, 0, 0)
             
-            local v85 = Instance.new("TextBox")
-            v85.Name = "Input"
-            v85.Parent = v83
-            v85.BackgroundColor3 = v11
-            v85.BorderColor3 = v12
-            v85.BorderSizePixel = 1
-            v85.Position = UDim2.new(0.35, 0, 0.1, 0)
-            v85.Size = UDim2.new(0.6, 0, 0.8, 0)
-            v85.Font = v14
-            v85.Text = v81 or ""
-            v85.PlaceholderText = "Enter text..."
-            v85.TextColor3 = v13
-            v85.TextSize = 14
+            local tbi = Instance.new("TextBox")
+            tbi.Name = "Input"
+            tbi.Parent = tbf
+            tbi.BackgroundColor3 = cg_blk
+            tbi.BorderColor3 = cg_red
+            tbi.BorderSizePixel = 1
+            tbi.Position = UDim2.new(0.35, 0, 0.1, 0)
+            tbi.Size = UDim2.new(0.6, 0, 0.8, 0)
+            tbi.Font = cg_font
+            tbi.Text = def or ""
+            tbi.PlaceholderText = "Enter text..."
+            tbi.TextColor3 = cg_wht
+            tbi.TextSize = 14
             
-            v85.FocusLost:Connect(function(v86)
-                if v86 then
-                    v82(v85.Text)
+            tbi.FocusLost:Connect(function(enter)
+                if enter then
+                    cb(tbi.Text)
                 end
             end)
             
-            return v40
+            return pg
         end
         
-        v40.AddRightTextBox = function(v87, v88, v89)
-            local v90 = Instance.new("Frame")
-            v90.Name = "TextBox_" .. v87
-            v90.Parent = v48
-            v90.BackgroundColor3 = v11
-            v90.BorderColor3 = v12
-            v90.BorderSizePixel = 2
-            v90.Size = UDim2.new(1, -10, 0, 30)
-            v90.Position = UDim2.new(0, 5, 0, 0)
+        pg.AddRightTextBox = function(txt, def, cb)
+            local tbf = Instance.new("Frame")
+            tbf.Name = "TBox_" .. txt
+            tbf.Parent = rc
+            tbf.BackgroundColor3 = cg_blk
+            tbf.BorderColor3 = cg_red
+            tbf.BorderSizePixel = 2
+            tbf.Size = UDim2.new(1, -10, 0, 30)
+            tbf.Position = UDim2.new(0, 5, 0, 0)
             
-            local v91 = Instance.new("TextLabel")
-            v91.Name = "Label"
-            v91.Parent = v90
-            v91.BackgroundTransparency = 1
-            v91.Size = UDim2.new(0.3, 0, 1, 0)
-            v91.Font = v14
-            v91.Text = v87
-            v91.TextColor3 = v13
-            v91.TextSize = 14
-            v91.TextXAlignment = Enum.TextXAlignment.Left
-            v91.Position = UDim2.new(0, 10, 0, 0)
+            local tbl = Instance.new("TextLabel")
+            tbl.Name = "Label"
+            tbl.Parent = tbf
+            tbl.BackgroundTransparency = 1
+            tbl.Size = UDim2.new(0.3, 0, 1, 0)
+            tbl.Font = cg_font
+            tbl.Text = txt
+            tbl.TextColor3 = cg_wht
+            tbl.TextSize = 14
+            tbl.TextXAlignment = Enum.TextXAlignment.Left
+            tbl.Position = UDim2.new(0, 10, 0, 0)
             
-            local v92 = Instance.new("TextBox")
-            v92.Name = "Input"
-            v92.Parent = v90
-            v92.BackgroundColor3 = v11
-            v92.BorderColor3 = v12
-            v92.BorderSizePixel = 1
-            v92.Position = UDim2.new(0.35, 0, 0.1, 0)
-            v92.Size = UDim2.new(0.6, 0, 0.8, 0)
-            v92.Font = v14
-            v92.Text = v88 or ""
-            v92.PlaceholderText = "Enter text..."
-            v92.TextColor3 = v13
-            v92.TextSize = 14
+            local tbi = Instance.new("TextBox")
+            tbi.Name = "Input"
+            tbi.Parent = tbf
+            tbi.BackgroundColor3 = cg_blk
+            tbi.BorderColor3 = cg_red
+            tbi.BorderSizePixel = 1
+            tbi.Position = UDim2.new(0.35, 0, 0.1, 0)
+            tbi.Size = UDim2.new(0.6, 0, 0.8, 0)
+            tbi.Font = cg_font
+            tbi.Text = def or ""
+            tbi.PlaceholderText = "Enter text..."
+            tbi.TextColor3 = cg_wht
+            tbi.TextSize = 14
             
-            v92.FocusLost:Connect(function(v93)
-                if v93 then
-                    v89(v92.Text)
+            tbi.FocusLost:Connect(function(enter)
+                if enter then
+                    cb(tbi.Text)
                 end
             end)
             
-            return v40
+            return pg
         end
         
-        v40.AddLeftDropdown = function(v94, v95, v96)
-            local v97 = Instance.new("Frame")
-            v97.Name = "Dropdown_" .. v94
-            v97.Parent = v44
-            v97.BackgroundColor3 = v11
-            v97.BorderColor3 = v12
-            v97.BorderSizePixel = 2
-            v97.Size = UDim2.new(1, -10, 0, 30)
-            v97.Position = UDim2.new(0, 5, 0, 0)
+        pg.AddLeftDropdown = function(txt, opts, cb)
+            local ddf = Instance.new("Frame")
+            ddf.Name = "Drop_" .. txt
+            ddf.Parent = lc
+            ddf.BackgroundColor3 = cg_blk
+            ddf.BorderColor3 = cg_red
+            ddf.BorderSizePixel = 2
+            ddf.Size = UDim2.new(1, -10, 0, 30)
+            ddf.Position = UDim2.new(0, 5, 0, 0)
             
-            local v98 = Instance.new("TextButton")
-            v98.Name = "DropButton"
-            v98.Parent = v97
-            v98.BackgroundTransparency = 1
-            v98.Size = UDim2.new(1, 0, 1, 0)
-            v98.Font = v14
-            v98.Text = v94 .. ": " .. v95[1]
-            v98.TextColor3 = v13
-            v98.TextSize = 14
+            local ddb = Instance.new("TextButton")
+            ddb.Name = "DropBtn"
+            ddb.Parent = ddf
+            ddb.BackgroundTransparency = 1
+            ddb.Size = UDim2.new(1, 0, 1, 0)
+            ddb.Font = cg_font
+            ddb.Text = txt .. ": " .. opts[1]
+            ddb.TextColor3 = cg_wht
+            ddb.TextSize = 14
             
-            local v99 = Instance.new("Frame")
-            v99.Name = "DropList"
-            v99.Parent = v97
-            v99.BackgroundColor3 = v11
-            v99.BorderColor3 = v12
-            v99.BorderSizePixel = 2
-            v99.Position = UDim2.new(0, 0, 1, 0)
-            v99.Size = UDim2.new(1, 0, 0, #v95 * 30)
-            v99.Visible = false
-            v99.ZIndex = 10
+            local ddl = Instance.new("Frame")
+            ddl.Name = "DropList"
+            ddl.Parent = ddf
+            ddl.BackgroundColor3 = cg_blk
+            ddl.BorderColor3 = cg_red
+            ddl.BorderSizePixel = 2
+            ddl.Position = UDim2.new(0, 0, 1, 0)
+            ddl.Size = UDim2.new(1, 0, 0, #opts * 30)
+            ddl.Visible = false
+            ddl.ZIndex = 10
             
-            local v100 = Instance.new("UIListLayout")
-            v100.Parent = v99
-            v100.SortOrder = Enum.SortOrder.LayoutOrder
+            local ddll = Instance.new("UIListLayout")
+            ddll.Parent = ddl
+            ddll.SortOrder = Enum.SortOrder.LayoutOrder
             
-            local v101 = v95[1]
+            local sel = opts[1]
             
-            for v102, v103 in ipairs(v95) do
-                local v104 = Instance.new("TextButton")
-                v104.Name = "Option_" .. v103
-                v104.Parent = v99
-                v104.BackgroundColor3 = v11
-                v104.BorderColor3 = v12
-                v104.BorderSizePixel = 1
-                v104.Size = UDim2.new(1, 0, 0, 30)
-                v104.Font = v14
-                v104.Text = v103
-                v104.TextColor3 = v13
-                v104.TextSize = 14
-                v104.ZIndex = 10
+            for i, opt in ipairs(opts) do
+                local ddopt = Instance.new("TextButton")
+                ddopt.Name = "Opt_" .. opt
+                ddopt.Parent = ddl
+                ddopt.BackgroundColor3 = cg_blk
+                ddopt.BorderColor3 = cg_red
+                ddopt.BorderSizePixel = 1
+                ddopt.Size = UDim2.new(1, 0, 0, 30)
+                ddopt.Font = cg_font
+                ddopt.Text = opt
+                ddopt.TextColor3 = cg_wht
+                ddopt.TextSize = 14
+                ddopt.ZIndex = 10
                 
-                v104.MouseButton1Click:Connect(function()
-                    v101 = v103
-                    v98.Text = v94 .. ": " .. v101
-                    v99.Visible = false
-                    v96(v101)
+                ddopt.MouseButton1Click:Connect(function()
+                    sel = opt
+                    ddb.Text = txt .. ": " .. sel
+                    ddl.Visible = false
+                    cb(sel)
                 end)
             end
             
-            v98.MouseButton1Click:Connect(function()
-                v99.Visible = not v99.Visible
+            ddb.MouseButton1Click:Connect(function()
+                ddl.Visible = not ddl.Visible
             end)
             
-            return v40
+            return pg
         end
         
-        v40.AddRightDropdown = function(v105, v106, v107)
-            local v108 = Instance.new("Frame")
-            v108.Name = "Dropdown_" .. v105
-            v108.Parent = v48
-            v108.BackgroundColor3 = v11
-            v108.BorderColor3 = v12
-            v108.BorderSizePixel = 2
-            v108.Size = UDim2.new(1, -10, 0, 30)
-            v108.Position = UDim2.new(0, 5, 0, 0)
+        pg.AddRightDropdown = function(txt, opts, cb)
+            local ddf = Instance.new("Frame")
+            ddf.Name = "Drop_" .. txt
+            ddf.Parent = rc
+            ddf.BackgroundColor3 = cg_blk
+            ddf.BorderColor3 = cg_red
+            ddf.BorderSizePixel = 2
+            ddf.Size = UDim2.new(1, -10, 0, 30)
+            ddf.Position = UDim2.new(0, 5, 0, 0)
             
-            local v109 = Instance.new("TextButton")
-            v109.Name = "DropButton"
-            v109.Parent = v108
-            v109.BackgroundTransparency = 1
-            v109.Size = UDim2.new(1, 0, 1, 0)
-            v109.Font = v14
-            v109.Text = v105 .. ": " .. v106[1]
-            v109.TextColor3 = v13
-            v109.TextSize = 14
+            local ddb = Instance.new("TextButton")
+            ddb.Name = "DropBtn"
+            ddb.Parent = ddf
+            ddb.BackgroundTransparency = 1
+            ddb.Size = UDim2.new(1, 0, 1, 0)
+            ddb.Font = cg_font
+            ddb.Text = txt .. ": " .. opts[1]
+            ddb.TextColor3 = cg_wht
+            ddb.TextSize = 14
             
-            local v110 = Instance.new("Frame")
-            v110.Name = "DropList"
-            v110.Parent = v108
-            v110.BackgroundColor3 = v11
-            v110.BorderColor3 = v12
-            v110.BorderSizePixel = 2
-            v110.Position = UDim2.new(0, 0, 1, 0)
-            v110.Size = UDim2.new(1, 0, 0, #v106 * 30)
-            v110.Visible = false
-            v110.ZIndex = 10
+            local ddl = Instance.new("Frame")
+            ddl.Name = "DropList"
+            ddl.Parent = ddf
+            ddl.BackgroundColor3 = cg_blk
+            ddl.BorderColor3 = cg_red
+            ddl.BorderSizePixel = 2
+            ddl.Position = UDim2.new(0, 0, 1, 0)
+            ddl.Size = UDim2.new(1, 0, 0, #opts * 30)
+            ddl.Visible = false
+            ddl.ZIndex = 10
             
-            local v111 = Instance.new("UIListLayout")
-            v111.Parent = v110
-            v111.SortOrder = Enum.SortOrder.LayoutOrder
+            local ddll = Instance.new("UIListLayout")
+            ddll.Parent = ddl
+            ddll.SortOrder = Enum.SortOrder.LayoutOrder
             
-            local v112 = v106[1]
+            local sel = opts[1]
             
-            for v113, v114 in ipairs(v106) do
-                local v115 = Instance.new("TextButton")
-                v115.Name = "Option_" .. v114
-                v115.Parent = v110
-                v115.BackgroundColor3 = v11
-                v115.BorderColor3 = v12
-                v115.BorderSizePixel = 1
-                v115.Size = UDim2.new(1, 0, 0, 30)
-                v115.Font = v14
-                v115.Text = v114
-                v115.TextColor3 = v13
-                v115.TextSize = 14
-                v115.ZIndex = 10
+            for i, opt in ipairs(opts) do
+                local ddopt = Instance.new("TextButton")
+                ddopt.Name = "Opt_" .. opt
+                ddopt.Parent = ddl
+                ddopt.BackgroundColor3 = cg_blk
+                ddopt.BorderColor3 = cg_red
+                ddopt.BorderSizePixel = 1
+                ddopt.Size = UDim2.new(1, 0, 0, 30)
+                ddopt.Font = cg_font
+                ddopt.Text = opt
+                ddopt.TextColor3 = cg_wht
+                ddopt.TextSize = 14
+                ddopt.ZIndex = 10
                 
-                v115.MouseButton1Click:Connect(function()
-                    v112 = v114
-                    v109.Text = v105 .. ": " .. v112
-                    v110.Visible = false
-                    v107(v112)
+                ddopt.MouseButton1Click:Connect(function()
+                    sel = opt
+                    ddb.Text = txt .. ": " .. sel
+                    ddl.Visible = false
+                    cb(sel)
                 end)
             end
             
-            v109.MouseButton1Click:Connect(function()
-                v110.Visible = not v110.Visible
+            ddb.MouseButton1Click:Connect(function()
+                ddl.Visible = not ddl.Visible
             end)
             
-            return v40
+            return pg
         end
         
-        v40.AddLeftSlider = function(v116, v117, v118, v119, v120)
-            local v121 = Instance.new("Frame")
-            v121.Name = "Slider_" .. v116
-            v121.Parent = v44
-            v121.BackgroundColor3 = v11
-            v121.BorderColor3 = v12
-            v121.BorderSizePixel = 2
-            v121.Size = UDim2.new(1, -10, 0, 50)
-            v121.Position = UDim2.new(0, 5, 0, 0)
+        pg.AddLeftSlider = function(txt, min, max, def, cb)
+            local slf = Instance.new("Frame")
+            slf.Name = "Slider_" .. txt
+            slf.Parent = lc
+            slf.BackgroundColor3 = cg_blk
+            slf.BorderColor3 = cg_red
+            slf.BorderSizePixel = 2
+            slf.Size = UDim2.new(1, -10, 0, 50)
+            slf.Position = UDim2.new(0, 5, 0, 0)
             
-            local v122 = Instance.new("TextLabel")
-            v122.Name = "Label"
-            v122.Parent = v121
-            v122.BackgroundTransparency = 1
-            v122.Size = UDim2.new(1, 0, 0, 20)
-            v122.Font = v14
-            v122.Text = v116 .. ": " .. v119
-            v122.TextColor3 = v13
-            v122.TextSize = 14
+            local sll = Instance.new("TextLabel")
+            sll.Name = "Label"
+            sll.Parent = slf
+            sll.BackgroundTransparency = 1
+            sll.Size = UDim2.new(1, 0, 0, 20)
+            sll.Font = cg_font
+            sll.Text = txt .. ": " .. def
+            sll.TextColor3 = cg_wht
+            sll.TextSize = 14
             
-            local v123 = Instance.new("Frame")
-            v123.Name = "SliderBack"
-            v123.Parent = v121
-            v123.BackgroundColor3 = v11
-            v123.BorderColor3 = v12
-            v123.BorderSizePixel = 2
-            v123.Position = UDim2.new(0, 10, 0, 30)
-            v123.Size = UDim2.new(1, -20, 0, 10)
+            local slb = Instance.new("Frame")
+            slb.Name = "SliderBack"
+            slb.Parent = slf
+            slb.BackgroundColor3 = cg_blk
+            slb.BorderColor3 = cg_red
+            slb.BorderSizePixel = 2
+            slb.Position = UDim2.new(0, 10, 0, 30)
+            slb.Size = UDim2.new(1, -20, 0, 10)
             
-            local v124 = Instance.new("Frame")
-            v124.Name = "SliderFill"
-            v124.Parent = v123
-            v124.BackgroundColor3 = v12
-            v124.BorderSizePixel = 0
-            v124.Size = UDim2.new((v119 - v117) / (v118 - v117), 0, 1, 0)
+            local slf = Instance.new("Frame")
+            slf.Name = "SliderFill"
+            slf.Parent = slb
+            slf.BackgroundColor3 = cg_red
+            slf.BorderSizePixel = 0
+            slf.Size = UDim2.new((def - min) / (max - min), 0, 1, 0)
             
-            local v125 = Instance.new("TextButton")
-            v125.Name = "SliderButton"
-            v125.Parent = v123
-            v125.BackgroundTransparency = 1
-            v125.Size = UDim2.new(1, 0, 1, 0)
-            v125.Text = ""
+            local slbt = Instance.new("TextButton")
+            slbt.Name = "SliderBtn"
+            slbt.Parent = slb
+            slbt.BackgroundTransparency = 1
+            slbt.Size = UDim2.new(1, 0, 1, 0)
+            slbt.Text = ""
             
-            local v126 = v119
+            local val = def
             
-            local function v127(v128)
-                local v129 = math.clamp((v128 - v123.AbsolutePosition.X) / v123.AbsoluteSize.X, 0, 1)
-                local v130 = v117 + (v118 - v117) * v129
-                v130 = math.floor(v130 / v120) * v120
-                v126 = v130
-                v124.Size = UDim2.new(v129, 0, 1, 0)
-                v122.Text = v116 .. ": " .. v126
-                v120(v126)
+            local function upd(pos)
+                local rat = math.clamp((pos - slb.AbsolutePosition.X) / slb.AbsoluteSize.X, 0, 1)
+                local nval = min + (max - min) * rat
+                nval = math.floor(nval)
+                val = nval
+                slf.Size = UDim2.new(rat, 0, 1, 0)
+                sll.Text = txt .. ": " .. val
+                cb(val)
             end
             
-            v125.InputBegan:Connect(function(v131)
-                if v131.UserInputType == Enum.UserInputType.MouseButton1 then
-                    v127(v131.Position.X)
-                    local v132 = true
-                    local v133
+            slbt.InputBegan:Connect(function(inp)
+                if inp.UserInputType == Enum.UserInputType.MouseButton1 then
+                    upd(inp.Position.X)
+                    local dg = true
+                    local cn
                     
-                    v133 = v3.InputChanged:Connect(function(v134)
-                        if v134.UserInputType == Enum.UserInputType.MouseMovement then
-                            v127(v134.Position.X)
+                    cn = cg_uis.InputChanged:Connect(function(inp)
+                        if inp.UserInputType == Enum.UserInputType.MouseMovement then
+                            upd(inp.Position.X)
                         end
                     end)
                     
-                    v3.InputEnded:Connect(function(v135)
-                        if v135.UserInputType == Enum.UserInputType.MouseButton1 then
-                            v132 = false
-                            v133:Disconnect()
+                    cg_uis.InputEnded:Connect(function(inp)
+                        if inp.UserInputType == Enum.UserInputType.MouseButton1 then
+                            dg = false
+                            cn:Disconnect()
                         end
                     end)
                 end
             end)
             
-            return v40
+            return pg
         end
         
-        v40.AddRightSlider = function(v136, v137, v138, v139, v140)
-            local v141 = Instance.new("Frame")
-            v141.Name = "Slider_" .. v136
-            v141.Parent = v48
-            v141.BackgroundColor3 = v11
-            v141.BorderColor3 = v12
-            v141.BorderSizePixel = 2
-            v141.Size = UDim2.new(1, -10, 0, 50)
-            v141.Position = UDim2.new(0, 5, 0, 0)
+        pg.AddRightSlider = function(txt, min, max, def, cb)
+            local slf = Instance.new("Frame")
+            slf.Name = "Slider_" .. txt
+            slf.Parent = rc
+            slf.BackgroundColor3 = cg_blk
+            slf.BorderColor3 = cg_red
+            slf.BorderSizePixel = 2
+            slf.Size = UDim2.new(1, -10, 0, 50)
+            slf.Position = UDim2.new(0, 5, 0, 0)
             
-            local v142 = Instance.new("TextLabel")
-            v142.Name = "Label"
-            v142.Parent = v141
-            v142.BackgroundTransparency = 1
-            v142.Size = UDim2.new(1, 0, 0, 20)
-            v142.Font = v14
-            v142.Text = v136 .. ": " .. v139
-            v142.TextColor3 = v13
-            v142.TextSize = 14
+            local sll = Instance.new("TextLabel")
+            sll.Name = "Label"
+            sll.Parent = slf
+            sll.BackgroundTransparency = 1
+            sll.Size = UDim2.new(1, 0, 0, 20)
+            sll.Font = cg_font
+            sll.Text = txt .. ": " .. def
+            sll.TextColor3 = cg_wht
+            sll.TextSize = 14
             
-            local v143 = Instance.new("Frame")
-            v143.Name = "SliderBack"
-            v143.Parent = v141
-            v143.BackgroundColor3 = v11
-            v143.BorderColor3 = v12
-            v143.BorderSizePixel = 2
-            v143.Position = UDim2.new(0, 10, 0, 30)
-            v143.Size = UDim2.new(1, -20, 0, 10)
+            local slb = Instance.new("Frame")
+            slb.Name = "SliderBack"
+            slb.Parent = slf
+            slb.BackgroundColor3 = cg_blk
+            slb.BorderColor3 = cg_red
+            slb.BorderSizePixel = 2
+            slb.Position = UDim2.new(0, 10, 0, 30)
+            slb.Size = UDim2.new(1, -20, 0, 10)
             
-            local v144 = Instance.new("Frame")
-            v144.Name = "SliderFill"
-            v144.Parent = v143
-            v144.BackgroundColor3 = v12
-            v144.BorderSizePixel = 0
-            v144.Size = UDim2.new((v139 - v137) / (v138 - v137), 0, 1, 0)
+            local slf = Instance.new("Frame")
+            slf.Name = "SliderFill"
+            slf.Parent = slb
+            slf.BackgroundColor3 = cg_red
+            slf.BorderSizePixel = 0
+            slf.Size = UDim2.new((def - min) / (max - min), 0, 1, 0)
             
-            local v145 = Instance.new("TextButton")
-            v145.Name = "SliderButton"
-            v145.Parent = v143
-            v145.BackgroundTransparency = 1
-            v145.Size = UDim2.new(1, 0, 1, 0)
-            v145.Text = ""
+            local slbt = Instance.new("TextButton")
+            slbt.Name = "SliderBtn"
+            slbt.Parent = slb
+            slbt.BackgroundTransparency = 1
+            slbt.Size = UDim2.new(1, 0, 1, 0)
+            slbt.Text = ""
             
-            local v146 = v139
+            local val = def
             
-            local function v147(v148)
-                local v149 = math.clamp((v148 - v143.AbsolutePosition.X) / v143.AbsoluteSize.X, 0, 1)
-                local v150 = v137 + (v138 - v137) * v149
-                v150 = math.floor(v150 / v140) * v140
-                v146 = v150
-                v144.Size = UDim2.new(v149, 0, 1, 0)
-                v142.Text = v136 .. ": " .. v146
-                v140(v146)
+            local function upd(pos)
+                local rat = math.clamp((pos - slb.AbsolutePosition.X) / slb.AbsoluteSize.X, 0, 1)
+                local nval = min + (max - min) * rat
+                nval = math.floor(nval)
+                val = nval
+                slf.Size = UDim2.new(rat, 0, 1, 0)
+                sll.Text = txt .. ": " .. val
+                cb(val)
             end
             
-            v145.InputBegan:Connect(function(v151)
-                if v151.UserInputType == Enum.UserInputType.MouseButton1 then
-                    v147(v151.Position.X)
-                    local v152 = true
-                    local v153
+            slbt.InputBegan:Connect(function(inp)
+                if inp.UserInputType == Enum.UserInputType.MouseButton1 then
+                    upd(inp.Position.X)
+                    local dg = true
+                    local cn
                     
-                    v153 = v3.InputChanged:Connect(function(v154)
-                        if v154.UserInputType == Enum.UserInputType.MouseMovement then
-                            v147(v154.Position.X)
+                    cn = cg_uis.InputChanged:Connect(function(inp)
+                        if inp.UserInputType == Enum.UserInputType.MouseMovement then
+                            upd(inp.Position.X)
                         end
                     end)
                     
-                    v3.InputEnded:Connect(function(v155)
-                        if v155.UserInputType == Enum.UserInputType.MouseButton1 then
-                            v152 = false
-                            v153:Disconnect()
+                    cg_uis.InputEnded:Connect(function(inp)
+                        if inp.UserInputType == Enum.UserInputType.MouseButton1 then
+                            dg = false
+                            cn:Disconnect()
                         end
                     end)
                 end
             end)
             
-            return v40
+            return pg
         end
         
-        return v40
+        pg.AddColorPicker = function(txt, def, cb)
+            local cpf = Instance.new("Frame")
+            cpf.Name = "ColorPicker_" .. txt
+            cpf.Parent = lc
+            cpf.BackgroundColor3 = cg_blk
+            cpf.BorderColor3 = cg_red
+            cpf.BorderSizePixel = 2
+            cpf.Size = UDim2.new(1, -10, 0, 30)
+            cpf.Position = UDim2.new(0, 5, 0, 0)
+            
+            local cpl = Instance.new("TextLabel")
+            cpl.Name = "Label"
+            cpl.Parent = cpf
+            cpl.BackgroundTransparency = 1
+            cpl.Size = UDim2.new(0.7, 0, 1, 0)
+            cpl.Font = cg_font
+            cpl.Text = txt
+            cpl.TextColor3 = cg_wht
+            cpl.TextSize = 14
+            cpl.TextXAlignment = Enum.TextXAlignment.Left
+            cpl.Position = UDim2.new(0, 10, 0, 0)
+            
+            local cpb = Instance.new("TextButton")
+            cpb.Name = "ColorBtn"
+            cpb.Parent = cpf
+            cpb.BackgroundColor3 = def or Color3.fromRGB(255, 0, 0)
+            cpb.BorderColor3 = cg_red
+            cpb.BorderSizePixel = 2
+            cpb.Position = UDim2.new(0.8, 0, 0.5, -10)
+            cpb.Size = UDim2.new(0, 40, 0, 20)
+            cpb.Text = ""
+            
+            local cpc = def or Color3.fromRGB(255, 0, 0)
+            
+            cpb.MouseButton1Click:Connect(function()
+                local cp = Instance.new("Frame")
+                cp.Name = "ColorPickerPanel"
+                cp.Parent = sg
+                cp.BackgroundColor3 = cg_blk
+                cp.BorderColor3 = cg_red
+                cp.BorderSizePixel = 2
+                cp.Position = UDim2.new(0.5, -100, 0.5, -100)
+                cp.Size = UDim2.new(0, 200, 0, 200)
+                cp.ZIndex = 100
+                
+                local r = Instance.new("TextBox")
+                r.Name = "R"
+                r.Parent = cp
+                r.BackgroundColor3 = cg_blk
+                r.BorderColor3 = cg_red
+                r.BorderSizePixel = 2
+                r.Position = UDim2.new(0, 10, 0, 10)
+                r.Size = UDim2.new(0, 50, 0, 30)
+                r.Font = cg_font
+                r.Text = tostring(math.floor(cpc.R * 255))
+                r.TextColor3 = cg_wht
+                r.TextSize = 14
+                r.ZIndex = 101
+                
+                local rl = Instance.new("TextLabel")
+                rl.Name = "RLabel"
+                rl.Parent = cp
+                rl.BackgroundTransparency = 1
+                rl.Position = UDim2.new(0, 70, 0, 10)
+                rl.Size = UDim2.new(0, 20, 0, 30)
+                rl.Font = cg_font
+                rl.Text = "R"
+                rl.TextColor3 = cg_wht
+                rl.TextSize = 14
+                rl.ZIndex = 101
+                
+                local g = Instance.new("TextBox")
+                g.Name = "G"
+                g.Parent = cp
+                g.BackgroundColor3 = cg_blk
+                g.BorderColor3 = cg_red
+                g.BorderSizePixel = 2
+                g.Position = UDim2.new(0, 10, 0, 50)
+                g.Size = UDim2.new(0, 50, 0, 30)
+                g.Font = cg_font
+                g.Text = tostring(math.floor(cpc.G * 255))
+                g.TextColor3 = cg_wht
+                g.TextSize = 14
+                g.ZIndex = 101
+                
+                local gl = Instance.new("TextLabel")
+                gl.Name = "GLabel"
+                gl.Parent = cp
+                gl.BackgroundTransparency = 1
+                gl.Position = UDim2.new(0, 70, 0, 50)
+                gl.Size = UDim2.new(0, 20, 0, 30)
+                gl.Font = cg_font
+                gl.Text = "G"
+                gl.TextColor3 = cg_wht
+                gl.TextSize = 14
+                gl.ZIndex = 101
+                
+                local b = Instance.new("TextBox")
+                b.Name = "B"
+                b.Parent = cp
+                b.BackgroundColor3 = cg_blk
+                b.BorderColor3 = cg_red
+                b.BorderSizePixel = 2
+                b.Position = UDim2.new(0, 10, 0, 90)
+                b.Size = UDim2.new(0, 50, 0, 30)
+                b.Font = cg_font
+                b.Text = tostring(math.floor(cpc.B * 255))
+                b.TextColor3 = cg_wht
+                b.TextSize = 14
+                b.ZIndex = 101
+                
+                local bl = Instance.new("TextLabel")
+                bl.Name = "BLabel"
+                bl.Parent = cp
+                bl.BackgroundTransparency = 1
+                bl.Position = UDim2.new(0, 70, 0, 90)
+                bl.Size = UDim2.new(0, 20, 0, 30)
+                bl.Font = cg_font
+                bl.Text = "B"
+                bl.TextColor3 = cg_wht
+                bl.TextSize = 14
+                bl.ZIndex = 101
+                
+                local preview = Instance.new("Frame")
+                preview.Name = "Preview"
+                preview.Parent = cp
+                preview.BackgroundColor3 = cpc
+                preview.BorderColor3 = cg_red
+                preview.BorderSizePixel = 2
+                preview.Position = UDim2.new(0, 100, 0, 10)
+                preview.Size = UDim2.new(0, 90, 0, 110)
+                preview.ZIndex = 101
+                
+                local apply = Instance.new("TextButton")
+                apply.Name = "Apply"
+                apply.Parent = cp
+                apply.BackgroundColor3 = cg_blk
+                apply.BorderColor3 = cg_red
+                apply.BorderSizePixel = 2
+                apply.Position = UDim2.new(0, 10, 0, 150)
+                apply.Size = UDim2.new(0, 80, 0, 30)
+                apply.Font = cg_font
+                apply.Text = "Apply"
+                apply.TextColor3 = cg_wht
+                apply.TextSize = 14
+                apply.ZIndex = 101
+                
+                local cancel = Instance.new("TextButton")
+                cancel.Name = "Cancel"
+                cancel.Parent = cp
+                cancel.BackgroundColor3 = cg_blk
+                cancel.BorderColor3 = cg_red
+                cancel.BorderSizePixel = 2
+                cancel.Position = UDim2.new(0, 110, 0, 150)
+                cancel.Size = UDim2.new(0, 80, 0, 30)
+                cancel.Font = cg_font
+                cancel.Text = "Cancel"
+                cancel.TextColor3 = cg_wht
+                cancel.TextSize = 14
+                cancel.ZIndex = 101
+                
+                local function updatePreview()
+                    local rv = tonumber(r.Text) or 0
+                    local gv = tonumber(g.Text) or 0
+                    local bv = tonumber(b.Text) or 0
+                    
+                    rv = math.clamp(rv, 0, 255) / 255
+                    gv = math.clamp(gv, 0, 255) / 255
+                    bv = math.clamp(bv, 0, 255) / 255
+                    
+                    preview.BackgroundColor3 = Color3.new(rv, gv, bv)
+                end
+                
+                r.FocusLost:Connect(updatePreview)
+                g.FocusLost:Connect(updatePreview)
+                b.FocusLost:Connect(updatePreview)
+                
+                apply.MouseButton1Click:Connect(function()
+                    local rv = tonumber(r.Text) or 0
+                    local gv = tonumber(g.Text) or 0
+                    local bv = tonumber(b.Text) or 0
+                    
+                    rv = math.clamp(rv, 0, 255) / 255
+                    gv = math.clamp(gv, 0, 255) / 255
+                    bv = math.clamp(bv, 0, 255) / 255
+                    
+                    cpc = Color3.new(rv, gv, bv)
+                    cpb.BackgroundColor3 = cpc
+                    cb(cpc)
+                    cp:Destroy()
+                end)
+                
+                cancel.MouseButton1Click:Connect(function()
+                    cp:Destroy()
+                end)
+                
+                md(cp)
+            end)
+            
+            return pg
+        end
+        
+        return pg
     end
     
-    v26.Notify = function(v156, v157, v158)
-        local v159 = Instance.new("Frame")
-        v159.Name = "Notification"
-        v159.Parent = v24
-        v159.BackgroundColor3 = v11
-        v159.BorderColor3 = v12
-        v159.BorderSizePixel = 2
-        v159.Position = UDim2.new(1, -300, 1, -100)
-        v159.Size = UDim2.new(0, 250, 0, 80)
-        v159.ZIndex = 100
+    win.Notify = function(ttl, txt, dur)
+        local ntf = Instance.new("Frame")
+        ntf.Name = "Notification"
+        ntf.Parent = sg
+        ntf.BackgroundColor3 = cg_blk
+        ntf.BorderColor3 = cg_red
+        ntf.BorderSizePixel = 2
+        ntf.Position = UDim2.new(1, -300, 1, -100)
+        ntf.Size = UDim2.new(0, 250, 0, 80)
+        ntf.ZIndex = 100
         
-        local v160 = Instance.new("TextLabel")
-        v160.Name = "Title"
-        v160.Parent = v159
-        v160.BackgroundTransparency = 1
-        v160.Size = UDim2.new(1, 0, 0, 30)
-        v160.Font = v14
-        v160.Text = v156
-        v160.TextColor3 = v13
-        v160.TextSize = 18
-        v160.ZIndex = 101
+        local ntft = Instance.new("TextLabel")
+        ntft.Name = "Title"
+        ntft.Parent = ntf
+        ntft.BackgroundTransparency = 1
+        ntft.Size = UDim2.new(1, 0, 0, 30)
+        ntft.Font = cg_font
+        ntft.Text = ttl
+        ntft.TextColor3 = cg_wht
+        ntft.TextSize = 18
+        ntft.ZIndex = 101
         
-        local v161 = Instance.new("TextLabel")
-        v161.Name = "Message"
-        v161.Parent = v159
-        v161.BackgroundTransparency = 1
-        v161.Position = UDim2.new(0, 0, 0, 30)
-        v161.Size = UDim2.new(1, 0, 1, -30)
-        v161.Font = v14
-        v161.Text = v157
-        v161.TextColor3 = v13
-        v161.TextSize = 14
-        v161.TextWrapped = true
-        v161.ZIndex = 101
+        local ntfm = Instance.new("TextLabel")
+        ntfm.Name = "Message"
+        ntfm.Parent = ntf
+        ntfm.BackgroundTransparency = 1
+        ntfm.Position = UDim2.new(0, 0, 0, 30)
+        ntfm.Size = UDim2.new(1, 0, 1, -30)
+        ntfm.Font = cg_font
+        ntfm.Text = txt
+        ntfm.TextColor3 = cg_wht
+        ntfm.TextSize = 14
+        ntfm.TextWrapped = true
+        ntfm.ZIndex = 101
         
-        v4:Create(v159, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(1, -270, 1, -100)}):Play()
+        cg_ts:Create(ntf, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(1, -270, 1, -100)}):Play()
         
-        task.delay(v158 or 5, function()
-            v4:Create(v159, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(1, 0, 1, -100)}):Play()
+        task.delay(dur or 5, function()
+            cg_ts:Create(ntf, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(1, 0, 1, -100)}):Play()
             task.delay(0.5, function()
-                v159:Destroy()
+                ntf:Destroy()
             end)
         end)
     end
     
-    local v162 = Instance.new("TextButton")
-    v162.Name = "CloseOpenButton"
-    v162.Parent = v24
-    v162.BackgroundColor3 = v11
-    v162.BorderColor3 = v12
-    v162.BorderSizePixel = 2
-    v162.Position = UDim2.new(0, 10, 0, 10)
-    v162.Size = UDim2.new(0, 100, 0, 30)
-    v162.Font = v14
-    v162.Text = "Toggle UI"
-    v162.TextColor3 = v13
-    v162.TextSize = 14
+    local tgb = Instance.new("TextButton")
+    tgb.Name = "ToggleBtn"
+    tgb.Parent = sg
+    tgb.BackgroundColor3 = cg_blk
+    tgb.BorderColor3 = cg_red
+    tgb.BorderSizePixel = 2
+    tgb.Position = UDim2.new(0, 10, 0, 10)
+    tgb.Size = UDim2.new(0, 100, 0, 30)
+    tgb.Font = cg_font
+    tgb.Text = "Toggle UI"
+    tgb.TextColor3 = cg_wht
+    tgb.TextSize = 14
     
-    v162.MouseButton1Click:Connect(function()
-        v27.Visible = not v27.Visible
+    tgb.MouseButton1Click:Connect(function()
+        mf.Visible = not mf.Visible
     end)
     
-    return v26
+    return win
 end
 
-return v1
+return cg
